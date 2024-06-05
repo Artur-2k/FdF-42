@@ -15,9 +15,19 @@
 // STRUCT FOR EACH ELEMENT OF THE MAP
 typedef struct s_point
 {
-	int		value;
+	int		x;
+	int		y;
+	int		z;
 	int		hexa;
 }	t_point;
+
+typedef struct s_map
+{
+	char *map_name;
+	int rows;
+	int cols;
+	t_point **matrix;
+}	t_map;
 
 // ENUM FOR ALL THE ERRORS
 typedef enum e_errors
@@ -31,8 +41,10 @@ typedef enum e_errors
 //*				PROTOTYPES				*//
 
 void 		print_matrix(t_point **matrix, int rows, int cols);
-void		get_rows_and_cols(int fd, int *rows, int *cols);
+void	get_rows_and_cols(char *map_name, t_map *map);
 void		free_matrix(t_point **matrix, int stopping_index);
-t_point		**get_matrix(char *relative_path, int rows, int cols);
+t_point		**get_matrix(char *map_name, int rows, int cols);
+int	open_file(char *map_name);
+void handle_error(int errnum);
 
 #endif

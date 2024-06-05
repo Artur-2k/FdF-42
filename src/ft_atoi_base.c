@@ -1,4 +1,4 @@
-#include "../inc/libft.h"
+#include "libft.h"
 
 static int check_base(char *base)
 {

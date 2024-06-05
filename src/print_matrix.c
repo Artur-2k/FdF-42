@@ -1,4 +1,4 @@
-#include "../inc/fdf.h"
+#include "fdf.h"
 
 void print_matrix(t_point **matrix, int rows, int cols)
 {

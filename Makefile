@@ -24,8 +24,8 @@ OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 MAIN_OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(MAIN_FILE))
 
 #Linking stuff
-# acrescentar -lmlx -lm -lX11 -lXext
-LINKS = -L$(LIB_DIR) -lfdf -L$(LIB_DIR)/mlx_linux -lmlx -lX11 -lXext -lm
+# acrescentar -lmlx -lm -lX11 -lXext       -L$(LIB_DIR)/mlx_linux -lmlx -lX11 -lXext -lm
+LINKS = -L$(LIB_DIR) -lfdf
 
 # Regras
 all: $(TARGET)
@@ -35,7 +35,7 @@ all: $(TARGET)
 # -L e l vao acrescentar lib_dir aos diretorios onde o linker vai procurar e a libfdf.a respetivamente
 $(TARGET): $(LIB_DIR)/$(LIBRARY) $(MAIN_OBJ)
 	@echo "Preparing the executable..."
-	@$(CC) $(CFLAGS) -o $@ $(MAIN_OBJ) $(LINKS)
+	@$(CC) $(CFLAGS) -o $@ $(MAIN_OBJ) $(LINKS) -g
 
 #a flag -p vai criar o diretorio pai se este ainda nao existir
 $(LIB_DIR)/$(LIBRARY): $(OBJ_FILES)
@@ -47,7 +47,7 @@ $(LIB_DIR)/$(LIBRARY): $(OBJ_FILES)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo "Preparing the objects..."
 	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) -c -o $@ $< -g
 
 
 clean:

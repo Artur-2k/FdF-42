@@ -6,11 +6,11 @@
 /*   By: artuda-s <artuda-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:47:52 by artuda-s          #+#    #+#             */
-/*   Updated: 2024/04/20 18:33:06 by artuda-s         ###   ########.fr       */
+/*   Updated: 2024/06/05 21:36:45 by artuda-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "libft.h"
 
 int	ft_atoi(const char *str)
 {

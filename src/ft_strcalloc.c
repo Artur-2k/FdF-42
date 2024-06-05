@@ -1,4 +1,4 @@
-#include "../inc/get_next_line.h"
+#include "get_next_line.h"
 
 char	*ft_strcalloc(size_t nitems, size_t size)
 {

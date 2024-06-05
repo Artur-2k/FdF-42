@@ -1,4 +1,4 @@
-#include "../inc/fdf.h"
+#include "fdf.h"
 
 void	free_matrix(t_point **matrix, int stopping_index)
 {

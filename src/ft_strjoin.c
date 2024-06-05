@@ -6,11 +6,11 @@
 /*   By: artuda-s <artuda-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:42:29 by artuda-s          #+#    #+#             */
-/*   Updated: 2024/04/18 13:42:33 by artuda-s         ###   ########.fr       */
+/*   Updated: 2024/06/05 21:36:31 by artuda-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "libft.h"
 
 static char	*ft_strcpy(char *dest, const char *src)
 {

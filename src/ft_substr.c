@@ -6,11 +6,11 @@
 /*   By: artuda-s <artuda-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 16:58:59 by artuda-s          #+#    #+#             */
-/*   Updated: 2024/04/18 12:23:43 by artuda-s         ###   ########.fr       */
+/*   Updated: 2024/06/05 21:36:25 by artuda-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "libft.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {

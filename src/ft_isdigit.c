@@ -6,11 +6,11 @@
 /*   By: artuda-s <artuda-s@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:51:14 by artuda-s          #+#    #+#             */
-/*   Updated: 2024/04/20 18:34:49 by artuda-s         ###   ########.fr       */
+/*   Updated: 2024/06/05 21:36:42 by artuda-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/libft.h"
+#include "libft.h"
 
 int	ft_isdigit(int c)
 {

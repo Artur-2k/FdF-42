@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   put_pixel_img.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: artuda-s <artuda-s@student.42.fr>          +#+  +:+       +#+        */
+/*   By: artuda-s < artuda-s@student.42porto.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/12 16:05:00 by artuda-s          #+#    #+#             */
-/*   Updated: 2024/06/05 21:36:28 by artuda-s         ###   ########.fr       */
+/*   Created: 2024/06/23 19:34:57 by artuda-s          #+#    #+#             */
+/*   Updated: 2024/06/23 20:13:35 by artuda-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fdf.h"
 
-size_t	ft_strlen(const char *str)
+void	put_pixel_to_img(t_image img, int x, int y, int color)
 {
-	size_t	i;
+	char	*dst;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	if (x >= 0 && y >= 0 && x < WIN_LENGTH && y < WIN_HEIGTH)
+	{
+		dst = img.img_addr + (y * img.line_len + x * (img.bpp / 8));
+		*(unsigned int *)dst = color;
+	}
 }

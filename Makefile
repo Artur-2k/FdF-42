@@ -1,62 +1,66 @@
-# Nome do target
+# EXECUTABLE
 TARGET = fdf
-LIBRARY = libfdf.a
 
-# Diretórios
-SRC_DIR = src
-OBJ_DIR = obj
-INC_DIR = inc
-LIB_DIR = lib
+# LIBRARIES
+LIBFT = libft.a
+MINILIBX = libmlx.a
+LIBFDF = libfdf.a
 
-# Compilador e flags
+# DIRECTORIES
+SRC_DIR = src/
+OBJ_DIR = obj/
+LIB_DIR = lib/
+INC_DIR = inc/
+
+# COMPILE STUFF
 CC = gcc
-# ADICIONAR -Wall -Werror -Wextra
-CFLAGS = -I$(INC_DIR)
+CFLAGS = -I$(INC_DIR) -Ilib/libft -Ilib/minilibx-linux
+# -Wall -Werror -Wextra
+LINKS = $(LIB_DIR)/$(LIBFT) $(LIB_DIR)/$(MINILIBX) -lX11 -lXext -lm
 
-# Arquivos fonte e objetos
-# filter-out remove <padrao> de <elements> neste caso tira a main.c que de todos os elementos e guarda o retorno em SRC_FILES
-# wildcard é a funcao que nos permite usar wildcares. neste caso *
-# patsubst <padrao> <replacement> <elemets> substitui padro por replacement na lista de elementos
-# neste caso está a ir buscar o nome de cada SRC_FILE nos SRC_DIR e a dar-lhe o mesmo nome.o no diretorio OBJ_DIR e faz o mesmo para a main
-SRC_FILES = $(filter-out $(SRC_DIR)/main.c, $(wildcard $(SRC_DIR)/*.c))
-MAIN_FILE = $(SRC_DIR)/main.c
-OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
-MAIN_OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(MAIN_FILE))
+# FILES
+SRC_FILES = animations.c draw.c exit_fdf.c free_matrix.c \
+get_boundaries.c get_matrix.c get_rows_and_cols.c handle_error.c \
+read_keys.c image_utils.c offset.c put_pixel_img.c utils2.c\
+resets.c rotations.c scales.c translation.c utils.c print_ma.c
+SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
+OBJ = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
+MAIN_FILE = $(addprefix $(SRC_DIR), main.c)
 
-#Linking stuff
-# acrescentar -lmlx -lm -lX11 -lXext       -L$(LIB_DIR)/mlx_linux -lmlx -lX11 -lXext -lm
-LINKS = -L$(LIB_DIR) -lfdf
-
-# Regras
+# RULES
 all: $(TARGET)
-	@echo "Done!"
 
-# depende da libfdf.a e de main.o
-# -L e l vao acrescentar lib_dir aos diretorios onde o linker vai procurar e a libfdf.a respetivamente
-$(TARGET): $(LIB_DIR)/$(LIBRARY) $(MAIN_OBJ)
+$(TARGET): $(LIBFT) $(MINILIBX) $(OBJ)
 	@echo "Preparing the executable..."
-	@$(CC) $(CFLAGS) -o $@ $(MAIN_OBJ) $(LINKS) -g
+	@$(CC) $(CFLAGS) -o $@ $(MAIN_FILE) $(OBJ) $(LINKS)
+	@echo "\nFdF is ready.\nUsage: ./fdf map_path"
 
-#a flag -p vai criar o diretorio pai se este ainda nao existir
-$(LIB_DIR)/$(LIBRARY): $(OBJ_FILES)
-	@echo "Preparing the library..."
-	@mkdir -p $(LIB_DIR)
-	@ar rcs $@ $^
 
-#os .o vao ter os mesmos nomes q os .c
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@echo "Preparing the objects..."
+$(LIBFT):
+	@echo "Creating libft.a..."
+	@make --silent -C $(LIB_DIR)/libft
+	@make --silent clean -C $(LIB_DIR)/libft
+	@mv $(LIB_DIR)libft/libft.a $(LIB_DIR)
+
+$(MINILIBX):
+	@echo "Creating libmlx_Linux.a..."
+	@make --silent all -C $(LIB_DIR)/minilibx-linux > /dev/null 2>&1
+	@mv $(LIB_DIR)minilibx-linux/libmlx.a $(LIB_DIR)
+
+build:
 	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -c -o $@ $< -g
+#	@printf "\n$(CYN)Compiling source files...$(WTH)\n"
 
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c | build
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@echo "Cleaning!"
-	@rm -rf $(OBJ_DIR) $(LIB_DIR)/$(LIBRARY)
+	@rm -rf $(OBJ_DIR) $(LIBFT) $(MINILIBX) $(LIBFDF)
 
 fclean:
 	@echo "Full cleaning!"
-	@rm -rf $(OBJ_DIR) $(TARGET) $(LIB_DIR)/$(LIBRARY)
+	@rm -rf $(OBJ_DIR) $(TARGET) $(LIB_DIR)$(LIBFT) $(LIB_DIR)$(MINILIBX)
 
 re: fclean all
 

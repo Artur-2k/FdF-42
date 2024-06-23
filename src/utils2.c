@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_matrix.c                                      :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: artuda-s < artuda-s@student.42porto.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/23 19:34:41 by artuda-s          #+#    #+#             */
-/*   Updated: 2024/06/23 19:52:48 by artuda-s         ###   ########.fr       */
+/*   Created: 2024/06/23 20:22:45 by artuda-s          #+#    #+#             */
+/*   Updated: 2024/06/23 20:22:55 by artuda-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	free_matrix(t_point **matrix, int stopping_index)
+void	rand_colors(t_data *data)
 {
-	int	index;
+	int	i;
+	int	j;
 
-	index = 0;
-	while (index < stopping_index)
-		free(matrix[index++]);
-	free(matrix);
-	return ;
+	i = 0;
+	while (i < data->rows)
+	{
+		j = 0;
+		while (j < data->cols)
+		{
+			if (data->matrix[i][j].z != 0)
+				data->matrix[i][j].color = rand() % 0x1000000;
+			j++;
+		}
+		i++;
+	}
+	update_img(data);
 }

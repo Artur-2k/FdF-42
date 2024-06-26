@@ -12,6 +12,7 @@
 
 #include "fdf.h"
 
+// frees every recourse alocated and exits
 int	exit_fdf(t_data *data)
 {
 	if (data->matrix)

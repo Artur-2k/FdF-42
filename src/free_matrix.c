@@ -12,6 +12,7 @@
 
 #include "fdf.h"
 
+// function to free the map matrix
 void	free_matrix(t_point **matrix, int stopping_index)
 {
 	int	index;

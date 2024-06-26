@@ -12,6 +12,8 @@
 
 #include "fdf.h"
 
+// bresenham's line drawing algorithm. wikipedia page is acctually good for 
+// a better understanding
 void	bresenham_part1(t_data *data, t_point A, t_point B)
 {
 	t_bsnh	bsnh;
@@ -27,11 +29,6 @@ void	bresenham_part1(t_data *data, t_point A, t_point B)
 	else
 		bsnh.sy = -1;
 	bsnh.error = bsnh.dx + bsnh.dy;
-	bresenham_part2(data, A, B, bsnh);
-}
-
-void	bresenham_part2(t_data *data, t_point A, t_point B, t_bsnh bsnh)
-{
 	while (1)
 	{
 		// fun fact. because i initiallized no color from map to -1,
@@ -59,6 +56,9 @@ void	bresenham_part2(t_data *data, t_point A, t_point B, t_bsnh bsnh)
 	}
 }
 
+
+// connecting every matrix element to its next to the right and next down bellow until we reach one 
+//of the limits or both at the end using the bresenham algorithm
 void	draw_map(t_data *data)
 {
 	int	i;

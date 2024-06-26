@@ -12,6 +12,7 @@
 
 #include "fdf.h"
 
+// function to get the limits of my map projection.
 void	get_bounderies(t_data *data)
 {
 	int	i;

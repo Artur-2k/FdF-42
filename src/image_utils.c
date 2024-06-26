@@ -6,12 +6,16 @@
 /*   By: artuda-s < artuda-s@student.42porto.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 20:10:45 by artuda-s          #+#    #+#             */
-/*   Updated: 2024/06/23 20:11:02 by artuda-s         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:41:06 by artuda-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+
+// destroys the old image and creates a new one
+// maybe would be better to bzero the pixels but now its done xd
+// redraws the map with the projections.
 void	update_img(t_data *data)
 {
 	if (data->img.img_ptr && data->mlx_win)
@@ -22,6 +26,7 @@ void	update_img(t_data *data)
 	draw_map(data);
 }
 
+// creates a new image
 void	new_image(t_data *data)
 {
 	data->img.img_ptr = mlx_new_image(data->mlx_ptr, WIN_LENGTH, WIN_HEIGTH);

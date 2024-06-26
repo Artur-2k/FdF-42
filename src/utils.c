@@ -6,12 +6,13 @@
 /*   By: artuda-s < artuda-s@student.42porto.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 19:35:08 by artuda-s          #+#    #+#             */
-/*   Updated: 2024/06/23 20:20:58 by artuda-s         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:19:31 by artuda-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+// returns the greater parameter
 int	get_max(int a, int b)
 {
 	if (a > b)
@@ -19,6 +20,7 @@ int	get_max(int a, int b)
 	return (b);
 }
 
+// return the lesser parameter
 int	get_min(int a, int b)
 {
 	if (a < b)
@@ -26,6 +28,7 @@ int	get_min(int a, int b)
 	return (b);
 }
 
+// function to open a file and check if it went wrong. returns the file descriptor
 int	open_file(char *map_name, t_data *data)
 {
 	int	fd;
@@ -35,13 +38,23 @@ int	open_file(char *map_name, t_data *data)
 		handle_error(OPEN_ERROR, data);
 	return (fd);
 }
-
-double	deg_to_rad(double deg)
+// function to applie a random color if there isn't a z value
+void	rand_colors(t_data *data)
 {
-	return ((deg) * M_PI / 180.0);
-}
+	int	i;
+	int	j;
 
-double	normalize_angle(double angle)
-{
-	return ((angle) = fmod((angle), 360));
+	i = 0;
+	while (i < data->rows)
+	{
+		j = 0;
+		while (j < data->cols)
+		{
+			if (data->matrix[i][j].z != 0)
+				data->matrix[i][j].color = rand() % 0x1000000; // 0xFFFFFF + 1 -> 0x1000000 <=> 9 + 1 -> 10
+			j++;
+		}
+		i++;
+	}
+	update_img(data); // puts the new map on the window
 }

@@ -6,7 +6,7 @@
 /*   By: artuda-s < artuda-s@student.42porto.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 19:34:33 by artuda-s          #+#    #+#             */
-/*   Updated: 2024/06/23 21:01:17 by artuda-s         ###   ########.fr       */
+/*   Updated: 2024/06/25 02:46:20 by artuda-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ static int	blinking_animation(t_data *data)
 	int	i;
 	int	j;
 
+	// this function will get called repeatedly very fast so 
+	//we need to reduce the ammount of times it triggers color
+	// blink frequency (lower = less frequent) 
 	blink_chance = 3;
-		// Adjust for desired blink frequency (lower = less frequent)
 	if (data->is_blinking)
 	{
 		i = 0;
@@ -39,22 +41,26 @@ static int	blinking_animation(t_data *data)
 
 int	animation(t_data *data)
 {
+	// if blinking key was pressed
 	if (data->is_blinking)
 		blinking_animation(data);
-	if (data->is_rotating)
+	// if rotating key was pressed
+	if (data->is_rotating) 
 	{
 		data->alpha += 0.15;
 		data->beta += 0.15;
 		data->gama += 0.1;
-		reset_projections_set_zoom(data); //! resets xyz_proj to xyz back again
-		//* step three re-rotate
-		rotate_x(data, fmod((data->alpha), 360) * M_PI / 180);
-		rotate_z(data, fmod((data->gama), 360) * M_PI / 180);
-		rotate_y(data, fmod((data->beta), 360) * M_PI / 180);
-		//* step pre-four if needed (on rotations) update map limits for offset
+		
+		reset_projections_set_zoom(data); // resets xyz_proj to xyz and applies scale
+		// re-rotate
+		rotate_x(data,DEG_TO_RAD( NORMALIZE_ANGLE(data->alpha)));
+		rotate_y(data,DEG_TO_RAD (NORMALIZE_ANGLE(data->beta) ));
+		rotate_z(data,DEG_TO_RAD (NORMALIZE_ANGLE(data->gama)) );
+
+		// update offsets
 		get_bounderies(data); // makes it rotate on itself on not on the 0.0
-		//* step four center the map with the same offsets
-		get_offsets(data);
+		get_offsets(data); //center the map with the same offsets
+		
 		//* shitft the object offset + translation(if added any)
 		translate(data, data->xoffset + data->xtranslate, data->yoffset + data->ytranslate);
 	}

@@ -20,9 +20,9 @@ LINKS = $(LIB_DIR)/$(LIBFT) $(LIB_DIR)/$(MINILIBX) -lX11 -lXext -lm
 
 # FILES
 SRC_FILES = animations.c draw.c exit_fdf.c free_matrix.c \
-get_boundaries.c get_matrix.c get_rows_and_cols.c handle_error.c \
-read_keys.c image_utils.c offset.c put_pixel_img.c utils2.c\
-resets.c rotations.c scales.c translation.c utils.c print_ma.c
+		get_boundaries.c get_matrix.c get_rows_and_cols.c handle_error.c \
+		read_keys.c image_utils.c offset.c put_pixel_img.c utils.c\
+		resets.c rotations.c scales.c translation.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
 MAIN_FILE = $(addprefix $(SRC_DIR), main.c)
@@ -34,7 +34,6 @@ $(TARGET): $(LIBFT) $(MINILIBX) $(OBJ)
 	@echo "Preparing the executable..."
 	@$(CC) $(CFLAGS) -o $@ $(MAIN_FILE) $(OBJ) $(LINKS)
 	@echo "\nFdF is ready.\nUsage: ./fdf map_path"
-
 
 $(LIBFT):
 	@echo "Creating libft.a..."
@@ -49,7 +48,6 @@ $(MINILIBX):
 
 build:
 	@mkdir -p $(OBJ_DIR)
-#	@printf "\n$(CYN)Compiling source files...$(WTH)\n"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | build
 	@$(CC) $(CFLAGS) -c $< -o $@

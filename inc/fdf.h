@@ -27,8 +27,8 @@
 #define SHIFT_VALUE 8
 #define ANGLE_CHANGE 4
 
-#define DEG_TO_RAD(deg) ((deg) * M_PI / 180.0)
-#define NORMALIZE_ANGLE(angle) ((angle) = fmod((angle), 360))
+#define DEG_TO_RAD(deg) (deg * M_PI / 180)
+#define NORMALIZE_ANGLE(angle) (fmod(angle, 360.0))
 
 //struct for bresenham aka fak norminette
 typedef struct s_bsnh
@@ -56,9 +56,10 @@ typedef struct s_point
 	int		restore_color;
 }	t_point;
 
+
+	// projection boundaries
 typedef	struct s_boundaries
 {
-	// boundaries projection
 	int maxx;
 	int maxy;
 	int maxz;

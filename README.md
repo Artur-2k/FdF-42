@@ -1,3 +1,8 @@
+/*
+				TODO
+prettify the roadmap of this project understanding and add some more study material
+*/
+
 read the map and store it into a 2d matrix that stores points coordinates and color
 	mallocs for 2d arrays
 	get_next_line

@@ -6,7 +6,7 @@
 /*   By: artuda-s < artuda-s@student.42porto.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 19:34:33 by artuda-s          #+#    #+#             */
-/*   Updated: 2024/07/27 17:00:00 by artuda-s         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:34:01 by artuda-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	blinking_animation(t_data *data)
 			i++;
 		}
 	}
+	return (0);
 }
 
 int	animation(t_data *data)

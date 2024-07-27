@@ -2,9 +2,8 @@
 TARGET = fdf
 
 # LIBRARIES
-LIBFT = libft.a
-MINILIBX = libmlx.a
-LIBFDF = libfdf.a
+LIBFT = $(LIB_DIR)libft.a
+MINILIBX = $(LIB_DIR)libmlx.a
 
 # DIRECTORIES
 SRC_DIR = src/
@@ -14,50 +13,61 @@ INC_DIR = inc/
 
 # COMPILE STUFF
 CC = gcc
-CFLAGS = -I$(INC_DIR) -Ilib/libft -Ilib/minilibx-linux
-# -Wall -Werror -Wextra
-LINKS = $(LIB_DIR)/$(LIBFT) $(LIB_DIR)/$(MINILIBX) -lX11 -lXext -lm
+CFLAGS = -I$(INC_DIR) -I$(LIB_DIR)libft -I$(LIB_DIR)minilibx-linux -Wall -Werror -Wextra
+LINKS = -L$(LIB_DIR) -lft -lmlx -lX11 -lXext -lm
 
 # FILES
 SRC_FILES = animations.c draw.c exit_fdf.c free_matrix.c \
-		get_boundaries.c get_matrix.c get_rows_and_cols.c handle_error.c \
-		read_keys.c image_utils.c offset.c put_pixel_img.c utils.c\
-		resets.c rotations.c scales.c translation.c angle_managment.c
+	get_boundaries.c get_matrix.c get_rows_and_cols.c handle_error.c \
+	read_keys.c image_utils.c offset.c put_pixel_img.c utils.c \
+	resets.c rotations.c scales.c translation.c angle_managment.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
-MAIN_FILE = $(addprefix $(SRC_DIR), main.c)
+MAIN_FILE = $(SRC_DIR)main.c
+MAIN_OBJ = $(OBJ_DIR)main.o
+
+# HEADER FILES
+HEADERS = $(wildcard $(INC_DIR)*.h)
 
 # RULES
 all: $(TARGET)
 
-$(TARGET): $(LIBFT) $(MINILIBX) $(OBJ)
+$(TARGET): $(OBJ) $(MAIN_OBJ) $(LIBFT) $(MINILIBX)
 	@echo "Preparing the executable..."
-	$(CC) $(CFLAGS) -o $@ $(MAIN_FILE) $(OBJ) $(LINKS)
-	echo "\nFdF is ready.\nUsage: ./fdf map_path"
+	$(CC) $(CFLAGS) -o $@ $(OBJ) $(MAIN_OBJ) $(LINKS)
+	@echo "\nFdF is ready.\nUsage: ./fdf map_path"
 
 $(LIBFT):
 	@echo "Creating libft.a..."
-	make --silent -C $(LIB_DIR)/libft
-	cp $(LIB_DIR)libft/libft.a $(LIB_DIR)
+	@make --silent -C $(LIB_DIR)libft
+	@cp $(LIB_DIR)libft/libft.a $@
 
 $(MINILIBX):
 	@echo "Creating libmlx_Linux.a..."
-	make --silent all -C $(LIB_DIR)/minilibx-linux > /dev/null 2>&1
-	cp $(LIB_DIR)minilibx-linux/libmlx.a $(LIB_DIR)
+	@make --silent -C $(LIB_DIR)minilibx-linux > /dev/null 2>&1
+	@cp $(LIB_DIR)minilibx-linux/libmlx.a $@
 
-build:
-	mkdir -p $(OBJ_DIR)
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c | build
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS) | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(MAIN_OBJ): $(MAIN_FILE) $(HEADERS) | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@echo "Cleaning!"
-	rm -rf $(OBJ_DIR) $(LIBFT) $(MINILIBX) $(LIBFDF)
+	@rm -rf $(OBJ_DIR)
+	@make -C $(LIB_DIR)libft clean
+	@make -C $(LIB_DIR)minilibx-linux clean
 
-fclean:
+fclean: clean
 	@echo "Full cleaning!"
-	rm -rf $(OBJ_DIR) $(TARGET) $(LIB_DIR)$(LIBFT) $(LIB_DIR)$(MINILIBX)
+	@rm -f $(TARGET)
+	@rm -f $(LIBFT)
+	@rm -f $(MINILIBX)
+	@make -C $(LIB_DIR)libft fclean
 
 re: fclean all
 

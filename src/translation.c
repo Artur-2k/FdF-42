@@ -6,7 +6,7 @@
 /*   By: artuda-s < artuda-s@student.42porto.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 19:35:09 by artuda-s          #+#    #+#             */
-/*   Updated: 2024/06/26 17:41:15 by artuda-s         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:09:56 by artuda-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	translate(t_data *data, int x_shift_value, int y_shift_value)
 	}
 }
 
-// for each respective translate key pressed add to x/y translation the SHIFT_VALUE constant
+// for each respective translate key pressed add to x/y
+//translation the SHIFT_VALUE constant
 //and apply it to the projection map
 void	manual_translation(t_data *data, int key)
 {
@@ -58,5 +59,5 @@ void	manual_translation(t_data *data, int key)
 		data->xtranslate -= SHIFT_VALUE;
 		translate(data, -SHIFT_VALUE, 0);
 	}
-	update_img(data); // update the images the image with the new map projection
+	update_img(data);
 }

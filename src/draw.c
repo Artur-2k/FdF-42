@@ -6,14 +6,19 @@
 /*   By: artuda-s < artuda-s@student.42porto.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 19:34:35 by artuda-s          #+#    #+#             */
-/*   Updated: 2024/06/23 20:53:42 by artuda-s         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:06:27 by artuda-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// bresenham's line drawing algorithm. wikipedia page is acctually good for 
+static void	bresenham_part2(t_data *data, t_point A, t_point B, t_bsnh bsnh);
+
+// bresenham's line drawing algorithm. wikipedia page is acctually good for
 // a better understanding
+// fun fact. because i initiallized no color from map to -1,
+// it goes to the max color (white 0xFFFFFF)
+// and if i put 0x1000000 it would go back to black
 void	bresenham_part1(t_data *data, t_point A, t_point B)
 {
 	t_bsnh	bsnh;
@@ -29,13 +34,15 @@ void	bresenham_part1(t_data *data, t_point A, t_point B)
 	else
 		bsnh.sy = -1;
 	bsnh.error = bsnh.dx + bsnh.dy;
+	bresenham_part2(data, A, B, bsnh);
+}
+
+static void	bresenham_part2(t_data *data, t_point A, t_point B, t_bsnh bsnh)
+{
 	while (1)
 	{
-		// fun fact. because i initiallized no color from map to -1,
-		// it goes to the max color (white 0xFFFFFF)
-		// and if i put 0x1000000 it would go back to black
-		put_pixel_to_img(data->img, A.proj_x, A.proj_y, get_max(A.color,
-				B.color));
+		put_pixel_to_img(data->img, A.proj_x, A.proj_y, get_max(A.color, \
+						B.color));
 		if (A.proj_x == B.proj_x && A.proj_y == B.proj_y)
 			break ;
 		bsnh.e2 = 2 * bsnh.error;
@@ -56,9 +63,9 @@ void	bresenham_part1(t_data *data, t_point A, t_point B)
 	}
 }
 
-
-// connecting every matrix element to its next to the right and next down bellow until we reach one 
-//of the limits or both at the end using the bresenham algorithm
+// connecting every matrix element to its next to the right and
+// next down bellow until we reach oneof the limits or both at
+//the end using the bresenham algorithm
 void	draw_map(t_data *data)
 {
 	int	i;
@@ -71,11 +78,14 @@ void	draw_map(t_data *data)
 		while (j < data->cols)
 		{
 			if (j < data->cols - 1)
-				bresenham_part1(data, data->matrix[i][j], data->matrix[i][j+ 1]);
+				bresenham_part1(data, data->matrix[i][j], \
+								data->matrix[i][j + 1]);
 			if (j > 0)
-				bresenham_part1(data, data->matrix[i][j], data->matrix[i][j- 1]);
+				bresenham_part1(data, data->matrix[i][j], \
+								data->matrix[i][j - 1]);
 			if (i < data->rows - 1)
-				bresenham_part1(data, data->matrix[i][j], data->matrix[i+ 1][j]);
+				bresenham_part1(data, data->matrix[i][j], \
+								data->matrix[i + 1][j]);
 			j++;
 		}
 		i++;

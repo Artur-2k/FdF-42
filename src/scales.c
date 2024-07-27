@@ -6,7 +6,7 @@
 /*   By: artuda-s < artuda-s@student.42porto.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 19:35:06 by artuda-s          #+#    #+#             */
-/*   Updated: 2024/06/26 17:47:17 by artuda-s         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:12:01 by artuda-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,14 @@ void	manual_scale(t_data *data, int key)
 		if (data->scale > 1)
 			data->scale -= 0.5;
 	}
-
-	reset_projections_set_zoom(data); // resets xyz_proj to xyz and applies scale
-
-	// re-rotate
-	rotate_x(data,DEG_TO_RAD( NORMALIZE_ANGLE(data->alpha)));
-	rotate_y(data,DEG_TO_RAD (NORMALIZE_ANGLE(data->beta) ));
-	rotate_z(data,DEG_TO_RAD (NORMALIZE_ANGLE(data->gama)) );
-
-	// update offsets
-	get_bounderies(data); // makes it rotate on itself on not on the 0.0
-	get_offsets(data); //center the map with the same offsets
-
-	//* shitft the object offset + translation(if added any)
-	translate(data, data->xoffset + data->xtranslate, data->yoffset + data->ytranslate);
-
-	//* updates the image (could just 0 the memory of the image instead too)
+	reset_projections_set_zoom(data);
+	rotate_x(data, deg_to_rad(normalize_angle(data->alpha)));
+	rotate_y(data, deg_to_rad(normalize_angle(data->beta)));
+	rotate_z(data, deg_to_rad(normalize_angle(data->gama)));
+	get_bounderies(data);
+	get_offsets(data);
+	translate(data, data->xoffset + data->xtranslate, \
+				data->yoffset + data->ytranslate);
 	update_img(data);
 }
 
@@ -46,26 +38,19 @@ void	manual_zscale(t_data *data, int key)
 		data->zscale++;
 	else
 		data->zscale--;
-
-	reset_projections_set_zoom(data); // resets xyz_proj to xyz and applies scale
-
-	// re-rotate
-	rotate_x(data,DEG_TO_RAD( NORMALIZE_ANGLE(data->alpha)));
-	rotate_y(data,DEG_TO_RAD (NORMALIZE_ANGLE(data->beta) ));
-	rotate_z(data,DEG_TO_RAD (NORMALIZE_ANGLE(data->gama)) );
-
-	// update offsets
-	get_bounderies(data); // makes it rotate on itself on not on the 0.0
-	get_offsets(data); //center the map with the same offsets
-
-	//* shitft the object offset + translation(if added any)
-	translate(data, data->xoffset + data->xtranslate, data->yoffset + data->ytranslate);
-
-	//* updates the image (could just 0 the memory of the image instead too)
+	reset_projections_set_zoom(data);
+	rotate_x(data, deg_to_rad(normalize_angle(data->alpha)));
+	rotate_y(data, deg_to_rad(normalize_angle(data->beta)));
+	rotate_z(data, deg_to_rad(normalize_angle(data->gama)));
+	get_bounderies(data);
+	get_offsets(data);
+	translate(data, data->xoffset + data->xtranslate, \
+				data->yoffset + data->ytranslate);
 	update_img(data);
 }
 
-// we check how much we need to zoom in based on the window and map lenght and width
+// we check how much we need to zoom in based on the window
+// and map lenght and width
 // we choose the smaller scale so the whole map fits
 static double	get_scale_factor(t_data *data)
 {
@@ -76,17 +61,17 @@ static double	get_scale_factor(t_data *data)
 	scale_x = WIN_LENGTH / abs(data->cols);
 	scale_y = WIN_HEIGTH / abs(data->rows);
 	scale_factor = get_min(scale_x, scale_y);
-	if (scale_factor < 4) // optional
+	if (scale_factor < 4)
 		return (1);
-	return (scale_factor / 1.5); // can zoom more or less based on what we divided by
+	return (scale_factor / 1.5);
 }
 
 void	get_zoom(t_data *data)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
-	if (!data->scale) // if we dont have a scale we fetch one
+	if (!data->scale)
 		data->scale = get_scale_factor(data);
 	i = 0;
 	while (i < data->rows)

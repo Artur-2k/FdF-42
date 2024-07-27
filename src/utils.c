@@ -6,7 +6,7 @@
 /*   By: artuda-s < artuda-s@student.42porto.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 19:35:08 by artuda-s          #+#    #+#             */
-/*   Updated: 2024/06/26 17:19:31 by artuda-s         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:09:31 by artuda-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	get_min(int a, int b)
 	return (b);
 }
 
-// function to open a file and check if it went wrong. returns the file descriptor
+// function to open a file and check if it went wrong.
+// returns the file descriptor
 int	open_file(char *map_name, t_data *data)
 {
 	int	fd;
@@ -38,6 +39,7 @@ int	open_file(char *map_name, t_data *data)
 		handle_error(OPEN_ERROR, data);
 	return (fd);
 }
+
 // function to applie a random color if there isn't a z value
 void	rand_colors(t_data *data)
 {
@@ -51,10 +53,10 @@ void	rand_colors(t_data *data)
 		while (j < data->cols)
 		{
 			if (data->matrix[i][j].z != 0)
-				data->matrix[i][j].color = rand() % 0x1000000; // 0xFFFFFF + 1 -> 0x1000000 <=> 9 + 1 -> 10
+				data->matrix[i][j].color = rand() % 0x1000000;
 			j++;
 		}
 		i++;
 	}
-	update_img(data); // puts the new map on the window
+	update_img(data);
 }

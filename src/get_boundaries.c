@@ -6,7 +6,7 @@
 /*   By: artuda-s < artuda-s@student.42porto.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/23 19:34:44 by artuda-s          #+#    #+#             */
-/*   Updated: 2024/06/23 20:51:14 by artuda-s         ###   ########.fr       */
+/*   Updated: 2024/07/27 17:08:26 by artuda-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,14 @@ void	get_bounderies(t_data *data)
 		j = 0;
 		while (j < data->cols)
 		{
-			data->boundaries.maxx = get_max(data->boundaries.maxx, data->matrix[i][j].proj_x);
-			data->boundaries.maxy = get_max(data->boundaries.maxy, data->matrix[i][j].proj_y);
-			data->boundaries.minx = get_min(data->boundaries.minx, data->matrix[i][j].proj_x);
-			data->boundaries.miny = get_min(data->boundaries.miny, data->matrix[i][j].proj_y);
+			data->boundaries.maxx = get_max(data->boundaries.maxx, \
+											data->matrix[i][j].proj_x);
+			data->boundaries.maxy = get_max(data->boundaries.maxy, \
+											data->matrix[i][j].proj_y);
+			data->boundaries.minx = get_min(data->boundaries.minx, \
+											data->matrix[i][j].proj_x);
+			data->boundaries.miny = get_min(data->boundaries.miny, \
+											data->matrix[i][j].proj_y);
 			j++;
 		}
 		i++;

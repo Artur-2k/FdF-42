@@ -39,7 +39,8 @@ Ensure the following dependencies are installed on your system. You can use Home
 ### Installing
 
 1. **Clone the Repository**
-   Download the project by running:
+
+	Download the project by running:
 
         git clone https://github.com/Artur-2k/FdF-42.git
 
